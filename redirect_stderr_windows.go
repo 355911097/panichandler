@@ -10,7 +10,7 @@
 package panichandler
 
 import (
-	"log"
+	"fmt"
 	"os"
 	"syscall"
 )
@@ -32,9 +32,7 @@ func setStdHandle(stdhandle int32, handle syscall.Handle) error {
 }
 
 // redirectStderr to the file passed in
-func redirectStderr(f *os.File) {
+func RedirectStderr(f *os.File) error {
 	err := setStdHandle(syscall.STD_ERROR_HANDLE, syscall.Handle(f.Fd()))
-	if err != nil {
-		log.Fatalf("Failed to redirect stderr to file: %v", err)
-	}
+	return fmt.Errorf("Failed to redirect stderr to file: %v", err)
 }
