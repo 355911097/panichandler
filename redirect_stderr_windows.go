@@ -34,5 +34,9 @@ func setStdHandle(stdhandle int32, handle syscall.Handle) error {
 // redirectStderr to the file passed in
 func RedirectStderr(f *os.File) error {
 	err := setStdHandle(syscall.STD_ERROR_HANDLE, syscall.Handle(f.Fd()))
-	return fmt.Errorf("Failed to redirect stderr to file: %v", err)
+	if err == nil {
+		return nil
+	} else {
+		return fmt.Errorf("Failed to redirect stderr to file: %v", err)
+	}
 }
